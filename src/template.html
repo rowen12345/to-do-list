@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="controls">
+        <button id="addTask">Add Task</button>
+        <dialog id="newTaskContainer">
+            <div id="newTask" >
+                <div id="inputName">
+                    <label>Name</label> <br>
+                    <input type="text" placeholder="Task Name" class="input">
+                </div>
+                <div id="inputDescription">
+                    <label>Description</label><br>
+                    <input type="text" placeholder="Description" class="description">
+                </div>
+                
+                <div class="flex-inputs">
+                    <input type="date" id="dueDate" name="dueDate" required min="">
+                
+                    <select name="priority" id="priority">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                    <select name="projects" id="projectsDropDown">
+                        <option value="inbox">Inbox</option>
+                    </select>
+                </div>
+                <br>
+                <div class="task-btn-modal">
+                    <button id="taskSubmitBtn">Create Task</button>
+                    <button id="cancel">Cancel</button>
+                </div>       
+            </div>
+        </dialog>
+        <button id="addProject">Create projects</button>
+        <dialog id="newProjectContainer">
+            <div id="newProject">
+                <label for="newProject">New Project</label>
+                <input type="text" placeholder="Project name" id="inputProject">
+                <button id="confirmProject">Add</button>
+                <button id="cancelProject">Cancel</button>
+            </div>
+        </dialog>
+    </div>  
+    <div id="list-of-to-dos">
+        <h1>To-dos</h1>
+        <div id="inbox">
+            <h2>Inbox:</h2>
+        </div>
+    </div>
+</body>
+</html>
