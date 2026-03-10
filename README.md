@@ -1,7 +1,8 @@
 # To-Do App
 
 A simple task management application that helps users organize their tasks and projects efficiently.
-<img width="926" height="684" alt="image" src="https://github.com/user-attachments/assets/49a8d34d-f565-422d-b4ce-ab0434936cd9" />
+You can try the application here:  
+🔗 https://rowen12345.github.io/to-do-list/
 
 ## Features
 - Create, update, and delete tasks and projects
