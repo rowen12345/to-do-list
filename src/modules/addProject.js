@@ -1,68 +1,78 @@
-// projects.js
-
-import { dialogProject } from "./init";
-
-// Factory function for Project objects
-function createProject(name) {
-  return {
-    name,
-    tasks: []
-  };
-}
+import { dialogProject } from './init';
 
 export function saveProjectsToStorage(list) {
   localStorage.setItem('projectNames', JSON.stringify(list));
 }
 
 function loadProjectsFromStorage() {
-  return JSON.parse(localStorage.getItem("projectNames")) || [];
+  return JSON.parse(localStorage.getItem('projectNames')) || [];
 }
 
-// --- DOM Helpers ---
-export function createProjectElement(projectVal) {
-  const newProject = document.createElement("div");
-  const newProjectName = document.createElement("h2");
+export const projectNames = loadProjectsFromStorage();
 
+export function createProjectElement(projectVal) {
+  const newProject = document.createElement('div');
+  newProject.id = projectVal.replace(/\s+/g, '');
+  newProject.className = 'project';
+
+  // Header row with title + delete button
+  const header = document.createElement('div');
+  header.className = 'project-header';
+
+  const newProjectName = document.createElement('h2');
   newProjectName.textContent = projectVal;
-  //Replace multiple spaces with a single space
-  newProject.id = projectVal.replace(/\s+/g, "");
-  newProject.className = "project";
-  newProject.appendChild(newProjectName);
+
+  const deleteProjectBtn = document.createElement('button');
+  deleteProjectBtn.className = 'delete-project-btn';
+  deleteProjectBtn.textContent = 'Delete';
+
+  deleteProjectBtn.addEventListener('click', () => {
+    // Remove project from DOM
+    newProject.remove();
+
+    // Remove from dropdown
+    const option = document.querySelector(`#projectsDropDown option[value="${projectVal.replace(/\s+/g, '')}"]`);
+    if (option) option.remove();
+
+    // Remove from storage
+    const index = projectNames.indexOf(projectVal);
+    if (index !== -1) {
+      projectNames.splice(index, 1);
+      saveProjectsToStorage(projectNames);
+    }
+  });
+
+  header.appendChild(newProjectName);
+  header.appendChild(deleteProjectBtn);
+  newProject.appendChild(header);
 
   return newProject;
 }
 
 export function createOptionElement(projectVal) {
-  const option = document.createElement("option");
-  //Replace multiple spaces with a single space
-  option.value = projectVal.replace(/\s+/g, "");
+  const option = document.createElement('option');
+  option.value = projectVal.replace(/\s+/g, '');
   option.textContent = projectVal;
   return option;
 }
 
-// --- Main Add Project Function ---
-//export const projectList = [];
-
-export const projectNames = loadProjectsFromStorage();
 export function addProject() {
-  const inputProject = document.getElementById("inputProject");
-  let projectVal = inputProject.value.trim();
+  const inputProject = document.getElementById('inputProject');
+  const projectVal = inputProject.value.trim();
 
-  if (!projectVal) return; // empty input guard
+  if (!projectVal) return;
 
   if (!projectNames.includes(projectVal)) {
     projectNames.push(projectVal);
     saveProjectsToStorage(projectNames);
 
-    // create DOM elements
     const newProject = createProjectElement(projectVal);
     const newOption = createOptionElement(projectVal);
 
-    document.getElementById("list-of-to-dos").appendChild(newProject);
-    document.getElementById("projectsDropDown").appendChild(newOption);
+    document.getElementById('list-of-to-dos').appendChild(newProject);
+    document.getElementById('projectsDropDown').appendChild(newOption);
   }
 
-  // reset input + close dialog
-  inputProject.value = "";
+  inputProject.value = '';
   dialogProject.close();
 }
